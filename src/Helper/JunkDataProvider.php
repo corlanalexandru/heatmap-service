@@ -55,10 +55,12 @@ class JunkDataProvider
         }
 
         for($i = 0; $i <= 10; $i++){
+            $types = ['product','static-page','category','checkout','homepage'];
+            $pickedType = $types[array_rand($types)];
             $payload = [
                 'customer' => uniqid('customer',true),
-                'url' => 'https://www.example.com/product/'.random_int(1,100),
-                'type' => 'product'
+                'url' => 'https://www.example.com/'.$pickedType.'/'.random_int(1,100),
+                'type' => $pickedType
             ];
             $data = $this->historyPreparator->prepare($payload);
             $this->customersRepository->save($data['customer']);
