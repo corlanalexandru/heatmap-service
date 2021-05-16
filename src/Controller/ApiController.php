@@ -12,9 +12,11 @@ use App\Repository\CustomersRepository;
 use App\Repository\HistoryRepository;
 use App\Repository\TypesRepository;
 use App\Validator\HistoryValidator;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -22,6 +24,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApiController extends AbstractController
 {
+    private $logger;
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @Route("visit", name="api-visit", methods={"POST"})
      * @param CustomersRepository $customersRepository
@@ -47,9 +55,22 @@ class ApiController extends AbstractController
         if(count($validator) > 0) {
             return new JsonResponse(['message'=>ApiResponses::VALIDATION_FAILED['MESSAGE'], 'errors' => $validator],ApiResponses::VALIDATION_FAILED['CODE']);
         }
-        $customersRepository->save($data['customer']);
+
+        try {
+            $customersRepository->save($data['customer']);
+        }
+        catch (\Exception $e) {
+            $this->logger->critical('Database insert failed'. $e->getMessage());
+        }
+
         $history = $historyFactory->create($data['url'], $data['fullUrl'], $data['type'], $data['customer'], $data['parameters']);
-        $historyRepository->save($history);
+
+        try {
+            $historyRepository->save($history);
+        }
+        catch (\Exception $e) {
+            $this->logger->critical('Database insert failed'. $e->getMessage());
+        }
         return new JsonResponse(['message'=>ApiResponses::RESOURCE_CREATED['MESSAGE']],ApiResponses::RESOURCE_CREATED['CODE']);
     }
 

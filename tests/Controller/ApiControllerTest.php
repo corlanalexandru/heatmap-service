@@ -56,7 +56,8 @@ class ApiControllerTest extends TestCase
         self::assertEquals(ApiResponses::REQUEST_OK['CODE'], $response->getStatusCode());
     }
 
-    public function testListCustomersWithSimilarJourney() {
+    public function testListCustomersWithSimilarJourney(): void
+    {
         $client = new Client(array(
             'http_errors' => false
         ));

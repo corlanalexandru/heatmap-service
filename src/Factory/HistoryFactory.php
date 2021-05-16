@@ -12,7 +12,7 @@ class HistoryFactory
 {
     public function create(string $url, string $fullUrl, Types $type, Customers $customer, $parameters = null): History
     {
-        return new History($url,$fullUrl,$type,$customer,$parameters);
+        return new History($url, $fullUrl, $type, $customer, $parameters);
     }
 
 }
