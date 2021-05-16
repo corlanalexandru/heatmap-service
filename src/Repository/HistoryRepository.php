@@ -32,12 +32,12 @@ class HistoryRepository extends ServiceEntityRepository
         if((bool)strtotime($from)) {
             $qb
                 ->andWhere('h.createdAt >= :from')
-                ->setParameter('from', (new \DateTime($from))->format('Y-m-d'));
+                ->setParameter('from', (new \DateTime($from))->setTime(00,00,00)->format('Y-m-d H:i:s'));
         }
         if((bool)strtotime($from)) {
             $qb
                 ->andWhere('h.createdAt <= :until')
-                ->setParameter('until', (new \DateTime($until))->modify('+1 day')->setTime(00,00,00)->format('Y-m-d'));
+                ->setParameter('until', (new \DateTime($until))->setTime(23,59,59)->format('Y-m-d H:i:s'));
         }
 
         return
