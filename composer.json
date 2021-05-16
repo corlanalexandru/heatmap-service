@@ -71,7 +71,7 @@
     },
     "scripts-descriptions": {
         "run-tests": "Run all tests from tests/ directory",
-        "run-code-analyze": "Analyse all PHP code from [src,test] directories on level 5"
+        "run-code-analyse": "Analyse all PHP code from [src,test] directories on level 5"
     },
     "conflict": {
         "symfony/symfony": "*"
