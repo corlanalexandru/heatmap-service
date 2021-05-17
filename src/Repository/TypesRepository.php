@@ -32,7 +32,7 @@ class TypesRepository extends ServiceEntityRepository
             $untilCondition = $qb->expr()->lte('h.createdAt', "'".(new \DateTime($until))->setTime(23,59,59)->format('Y-m-d H:i:s')."'");
         }
         $qb
-            ->select('count(h.type) as hits, t.name')
+            ->select('count(h.type) as hits, t.name, t.slug')
             ->leftJoin(History::class, 'h','WITH',$qb->expr()->andX(
                 $qb->expr()->eq('t.id' ,'h.type'),
                 $fromCondition,

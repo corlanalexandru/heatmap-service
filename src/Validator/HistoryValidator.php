@@ -4,6 +4,7 @@
 namespace App\Validator;
 
 
+use App\Entity\Customers;
 use App\Entity\Types;
 
 class HistoryValidator
@@ -20,7 +21,10 @@ class HistoryValidator
 
         if(!$data['type'] instanceof Types) {
             $errors[] = 'The specified type does not exist!';
-            return $errors;
+        }
+
+        if(!$data['customer'] instanceof Customers) {
+            $errors[] = "The specified customer can't be used!";
         }
 
         return $errors;

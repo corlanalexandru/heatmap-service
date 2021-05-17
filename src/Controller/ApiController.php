@@ -95,7 +95,7 @@ class ApiController extends AbstractController
         $customer = $customersRepository->findOneBy(['uid' => $uid]);
         $from = $request->get('from','');
         $until = $request->get('until','');
-        $limit = $request->get('limit',$this->getParameter('API_LISTING_DEFAULT_LIMIT'));
+        $limit = ((int)$request->get('limit')) ?: $this->getParameter('API_LISTING_DEFAULT_LIMIT');
         if($customer === null) {
             return new JsonResponse(['message'=>ApiResponses::RESOURCE_NOT_FOUND['MESSAGE']],ApiResponses::RESOURCE_NOT_FOUND['CODE']);
         }
@@ -156,10 +156,12 @@ class ApiController extends AbstractController
     ): JsonResponse
     {
         $customer = $customersRepository->findOneBy(['uid' => $uid]);
-        $limit = $request->get('limit',$this->getParameter('API_LISTING_SIMILAR_JOURNEY_USERS'));
+        $limit = ((int)$request->get('limit')) ?: $this->getParameter('API_LISTING_SIMILAR_JOURNEY_USERS');
+
         if($customer === null) {
             return new JsonResponse(['message'=>ApiResponses::RESOURCE_NOT_FOUND['MESSAGE']],ApiResponses::RESOURCE_NOT_FOUND['CODE']);
         }
+
         return new JsonResponse($customersRepository->findCustomersWithSimilarJourney($customer,$limit));
     }
 }

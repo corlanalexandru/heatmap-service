@@ -65,7 +65,7 @@
         "run-tests": [
             "phpunit"
         ],
-        "run-code-analyze": [
+        "run-code-analyse": [
             "phpstan analyse src tests --level 5"
         ]
     },
