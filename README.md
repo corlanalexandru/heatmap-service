@@ -1,16 +1,16 @@
 # heatmap-service
 
-**Commands to run the application**
+**Commands to run the application(from root directory)**
 
 - `docker-compose up -d --build --force-recreate`
 - `docker-compose run --rm php74-service composer install`
 - `docker-compose run --rm php74-service php bin/console doctrine:database:create`
 - `docker-compose run --rm php74-service php bin/console doctrine:migrations:migrate`
 
-**Provide starter testing data for the application**
+**Provide starter testing data for the application(from root directory)**
 - `docker-compose run --rm php74-service php bin/console database:provide:junk:data`
 
-**Run tests and code analysis**
+**Run tests and code analysis(from root directory)**
 - `composer run-tests` - unit tests defined in tests/ directory
 - `composer run-code-analyse` - run code analyse on level 5 - https://phpstan.org/user-guide/rule-levels
 
